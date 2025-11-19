@@ -4,7 +4,7 @@ from . import bp
 from ..decorators import permission_required
 
 @bp.route('/')
-@login_required
+
 def dashboard():
     return render_template('main/dashboard.html', user=current_user)
 

@@ -28,7 +28,7 @@ class BaseConfig:
     BABEL_DEFAULT_TIMEZONE = os.getenv("BABEL_DEFAULT_TIMEZONE", "Africa/Mogadishu")
 
     # Rate limiting
-    RATELIMIT_DEFAULT = os.getenv("RATELIMIT_DEFAULT", "200 per day;50 per hour")
+    RATELIMIT_DEFAULT = os.getenv("RATELIMIT_DEFAULT", "200/day;50/hour")
 
     # Mail configuration
     MAIL_SERVER = os.getenv("MAIL_SERVER")

@@ -1,0 +1,41 @@
+<div class="sidebar" id="sidebar">
+
+  <a href="#" class="menu-title">
+    <i class="fa fa-bars"></i> <span>Menu</span>
+  </a>
+
+  <a href="{{ url_for('main.dashboard') }}">
+    <i class="fa fa-home"></i> <span>Dashboard</span>
+  </a>
+
+  <a href="{{ url_for('customer_bp.list_customers') }}">
+    <i class="fa fa-users"></i> <span>Customers</span>
+  </a>
+
+  <a href="{{ url_for('supplier_bp.list_suppliers') }}">
+    <i class="fa fa-truck"></i> <span>Suppliers</span>
+  </a>
+
+  <a href="{{ url_for('purchase_bp.list_purchases') }}">
+    <i class="fa fa-shopping-cart"></i> <span>Purchases</span>
+  </a>
+
+  <a href="{{ url_for('medicine_bp.list_medicines') }}">
+    <i class="fa fa-boxes"></i> <span>Medicines</span>
+  </a>
+
+  <a href="{{ url_for('sale_bp.list_sales') }}">
+    <i class="fa fa-chart-line"></i> <span>Sales</span>
+  </a>
+
+  <a href="{{ url_for('sale_bp.sales_report') }}">
+    <i class="fa fa-file-alt"></i> <span>Reports</span>
+  </a>
+
+  <a href="{{ url_for('auth.list_users') }}">
+    <i class="fa fa-user-circle"></i> <span>Users</span>
+  </a>
+
+</div>
+
+<div id="overlay"></div>

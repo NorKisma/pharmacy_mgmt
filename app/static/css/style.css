@@ -1,0 +1,272 @@
+/* =========================
+   GENERAL STYLES
+========================= */
+body {
+    margin: 0;
+    background-color: #f8f9fa; /* Light Mode */
+    color: #212529; /* Light Mode text */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: #121212;
+    color: #f1f1f1;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar-custom {
+    /* Linear gradient from left to right */
+    background: linear-gradient(to right, #578fcf, #d39f63, #b4c93c);
+    color: #fff; /* Optional: text color */
+}
+.toggle-btn {
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: white;
+    transition: color 0.2s;
+}
+.toggle-btn:hover {
+    color: #ffd700;
+}
+#navbarUser a:hover {
+    text-decoration: underline;
+}
+nav.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1060;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+.sidebar {
+    width: 180px;
+    height: 100vh;
+   
+    background: linear-gradient(to right, #080c11, #352a14);
+ 
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 50px;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    z-index: 1050;
+}
+.sidebar a {
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 10px 12px;
+    text-decoration: none;
+    transition: all 0.2s;
+    position: relative;
+}
+.sidebar a i {
+    margin-right: 8px;
+    min-width: 15px;
+    text-align: center;
+    font-size: 1.0rem;
+}
+.sidebar a:hover {
+    background-color: #1a2530;
+}
+.sidebar .menu-title {
+    font-weight: bold;
+    background-color: #3167a8;
+    justify-content: center;
+    pointer-events: none;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+/* Collapsed Sidebar */
+.sidebar.collapsed {
+    width: 50px;
+}
+.sidebar.collapsed a span {
+    display: none;
+}
+.sidebar.collapsed a::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #343a40;
+    padding: 5px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    color: white;
+    font-size: 14px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, left 0.3s;
+}
+.sidebar.collapsed a:hover::after {
+    opacity: 1;
+    left: 90px;
+}
+
+/* =========================
+   MOBILE SIDEBAR OVERLAY
+========================= */
+@media (max-width: 768px) {
+    .sidebar {
+        left: -220px;
+    }
+    .sidebar.open {
+        left: 0;
+        box-shadow: 2px 0 12px rgba(0,0,0,0.4);
+    }
+    .main-content, .main-content.expanded {
+        margin-left: 0 !important;
+    }
+    #overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.4);
+        z-index: 1040;
+    }
+    #overlay.active {
+        display: block;
+    }
+    .sidebar-toggle {
+        left: 10px;
+    }
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+.main-content {
+    margin-left: 220px;
+    padding: 20px;
+    padding-top: 70px;
+    transition: all 0.3s ease-in-out;
+}
+.main-content.expanded {
+    margin-left: 70px;
+}
+
+/* =========================
+   SIDEBAR TOGGLE BUTTON
+========================= */
+.sidebar-toggle {
+    position: fixed;
+    top: 15px;
+    left: 230px;
+    z-index: 1110;
+    background: #343a40;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease-in-out;
+}
+.sidebar.collapsed ~ .sidebar-toggle {
+    left: 80px;
+}
+.sidebar-toggle i {
+    transition: transform 0.3s ease-in-out;
+}
+.sidebar.collapsed ~ .sidebar-toggle i {
+    transform: rotate(180deg);
+}
+
+/* =========================
+   TABLES
+========================= */
+body.dark-mode .table {
+    color: #f1f1f1;
+    background-color: #1e1e1e;
+    border-color: #2c2c2c;
+}
+body.dark-mode .table thead {
+    background-color: #2c2c2c;
+    color: #f1f1f1;
+}
+body.dark-mode .table tbody tr:nth-child(even) {
+    background-color: #262626;
+}
+body.dark-mode .table tbody tr:hover {
+    background-color: #333333;
+}
+
+/* DataTables Pagination Buttons */
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button {
+    color: #f1f1f1 !important;
+    background-color: #2c2c2c !important;
+    border: 1px solid #444;
+}
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: #3a3a3a !important;
+}
+
+/* =========================
+   MODALS
+========================= */
+body.dark-mode .modal-content {
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+    border-color: #333;
+}
+body.dark-mode .modal-header {
+    background-color: #2c2c2c;
+    color: #f1f1f1;
+}
+body.dark-mode .modal-footer {
+    background-color: #2c2c2c;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+body.dark-mode .btn {
+    border-color: #444;
+    color: #f1f1f1;
+}
+
+/* =========================
+   FORM INPUTS
+========================= */
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+    border: 1px solid #333;
+}
+
+/* =========================
+   CARDS
+========================= */
+body.dark-mode .card {
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+}
+
+/* =========================
+   TRANSITIONS
+========================= */
+body,
+.table,
+.modal-content,
+.btn,
+input,
+select,
+textarea {
+    transition: background-color 0.3s, color 0.3s;
+}
