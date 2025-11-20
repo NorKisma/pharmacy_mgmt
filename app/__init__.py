@@ -4,11 +4,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from .extensions import db, migrate, login_manager, mail, babel, limiter
+from .extensions import db, migrate, login_manager, mail, babel, limiter, get_locale
 from .config import get_config
 from .models import User
 
+# ---------------------------
 # User loader for flask-login
+# ---------------------------
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -16,6 +18,9 @@ def load_user(user_id):
 login_manager.login_view = "auth.login"
 login_manager.login_message_category = "info"
 
+# ---------------------------
+# Create Flask app
+# ---------------------------
 def create_app(config_name=None):
     app = Flask(__name__, instance_relative_config=False)
 
@@ -28,10 +33,12 @@ def create_app(config_name=None):
     migrate.init_app(app, db)
     login_manager.init_app(app)
     mail.init_app(app)
-    babel.init_app(app)
     limiter.init_app(app)
+    babel.init_app(app, locale_selector=get_locale)  # <-- new 3.x syntax
 
-    # Import and register blueprints
+    # ---------------------------
+    # Register blueprints
+    # ---------------------------
     from .auth.routes import bp as auth_bp
     from .main.routes import bp as main_bp
     from .customers.routes import bp as customer_bp
@@ -40,13 +47,13 @@ def create_app(config_name=None):
     from .medicines.routes import bp as medicine_bp
     from .sales.routes import bp as sale_bp
 
-    app.register_blueprint(main_bp, url_prefix="/")              # main.dashboard
-    app.register_blueprint(auth_bp, url_prefix="/auth")         # auth.logout, auth.list_users
-    app.register_blueprint(customer_bp, url_prefix="/customers")# customer.list_customers
-    app.register_blueprint(supplier_bp, url_prefix="/suppliers")# supplier.list_suppliers
-    app.register_blueprint(purchase_bp, url_prefix="/purchases")# purchase.list_purchases
-    app.register_blueprint(medicine_bp, url_prefix="/medicines")# medicine.list_medicines
-    app.register_blueprint(sale_bp, url_prefix="/sales")        # sale.list_sales, sale.sales_report
+    app.register_blueprint(main_bp, url_prefix="/")
+    app.register_blueprint(auth_bp, url_prefix="/auth")
+    app.register_blueprint(customer_bp, url_prefix="/customers")
+    app.register_blueprint(supplier_bp, url_prefix="/suppliers")
+    app.register_blueprint(purchase_bp, url_prefix="/purchases")
+    app.register_blueprint(medicine_bp, url_prefix="/medicines")
+    app.register_blueprint(sale_bp, url_prefix="/sales")
 
     # Make instance folder
     os.makedirs(app.instance_path, exist_ok=True)

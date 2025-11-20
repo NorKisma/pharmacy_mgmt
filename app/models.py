@@ -1,6 +1,8 @@
 from datetime import datetime
 from flask_login import UserMixin
 from .extensions import db
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # Role <-> Permission many-to-many
 role_permissions = db.Table(
@@ -41,6 +43,13 @@ class User(db.Model, UserMixin):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     created_by = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+
 
 class AuditLog(db.Model):
     __tablename__ = "audit_logs"

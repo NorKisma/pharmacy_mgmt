@@ -15,9 +15,26 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
       <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
 
-        <li class="nav-item me-3">
-          <span class="nav-link text-white">Welcome, {{ current_user.name }}</span>
-        </li>
+        {% if current_user.is_authenticated %}
+          <!-- User Greeting -->
+          <li class="nav-item me-3">
+            <span class="nav-link text-white">Welcome, {{ current_user.name }} ({{ current_user.role }})</span>
+          </li>
+
+          <!-- Logout -->
+          <li class="nav-item ms-3">
+            <a class="nav-link text-white" href="{{ url_for('auth.logout') }}">
+              <i class="fas fa-sign-out-alt me-1"></i> Logout
+            </a>
+          </li>
+        {% else %}
+          <!-- Login -->
+          <li class="nav-item ms-3">
+            <a class="nav-link text-white" href="{{ url_for('auth.login') }}">
+              <i class="fas fa-sign-in-alt me-1"></i> Login
+            </a>
+          </li>
+        {% endif %}
 
         <!-- Dark Mode Toggle -->
         <li class="nav-item ms-3">
@@ -26,9 +43,16 @@
           </button>
         </li>
 
-        <!-- Logout -->
-        <li class="nav-item">
-          <a class="nav-link text-white" href="{{ url_for('auth.logout') }}">Logout</a>
+        <!-- Language Selector -->
+        <li class="nav-item ms-3 dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-language me-1"></i> Language
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
+            <li><a class="dropdown-item" href="{{ url_for('main.set_language', lang_code='en') }}">English</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('main.set_language', lang_code='so') }}">Somali</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('main.set_language', lang_code='ar') }}">Arabic</a></li>
+          </ul>
         </li>
 
       </ul>

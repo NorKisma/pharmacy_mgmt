@@ -10,6 +10,7 @@
 <div class="card shadow-sm p-4" style="max-width: 400px; width: 100%;">
     <h2 class="text-center mb-4">Login</h2>
 
+    <!-- Flash messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
@@ -18,25 +19,35 @@
         {% endif %}
     {% endwith %}
 
+    <!-- Login form -->
     <form method="POST" action="{{ url_for('auth.login', next=request.args.get('next')) }}">
         {{ form.hidden_tag() }}
+
+        <!-- Email -->
         <div class="mb-3">
             {{ form.email.label(class="form-label") }}
             {{ form.email(class="form-control", placeholder="Enter your email", autofocus=True) }}
         </div>
+
+        <!-- Password -->
         <div class="mb-3">
             {{ form.password.label(class="form-label") }}
             {{ form.password(class="form-control", placeholder="Enter your password") }}
         </div>
+
+        <!-- Remember me -->
         <div class="form-check mb-3">
             {{ form.remember(class="form-check-input") }}
             {{ form.remember.label(class="form-check-label") }}
         </div>
+
+        <!-- Submit -->
         {{ form.submit(class="btn btn-success w-100") }}
     </form>
 
+    <!-- Register link -->
     <p class="text-center mt-3">
-        Don't have an account? <a href="{{ url_for('auth.register') }}">Register</a>
+        Don't have an account? <a href="{{ url_for('auth.add_user') }}">Register</a>
     </p>
 </div>
 

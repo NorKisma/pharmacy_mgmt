@@ -1,0 +1,126 @@
+<!-- app/auth/templates/auth/add_user.html -->
+{% extends 'main/base.html' %}
+
+{% block title %}Add User{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3 class="mb-3">Add New User</h3>
+
+    <!-- Toast container -->
+    <div id="toastContainer" class="position-fixed top-0 end-0 p-3" style="z-index: 1100;"></div>
+
+    <!-- Hidden Flash Messages for JS -->
+    <div id="flash-messages" style="display:none;">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div data-category="{{ category }}" data-message="{{ message }}"></div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('auth.add_user') }}">
+                {{ form.hidden_tag() }}
+
+                <!-- Name -->
+                <div class="mb-3">
+                    {{ form.name.label(class="form-label") }}
+                    {{ form.name(class="form-control", placeholder="Enter full name") }}
+                    {% if form.name.errors %}
+                        <div class="text-danger small mt-1">
+                            {% for err in form.name.errors %} {{ err }} {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    {{ form.email.label(class="form-label") }}
+                    {{ form.email(class="form-control", placeholder="Enter email") }}
+                    {% if form.email.errors %}
+                        <div class="text-danger small mt-1">
+                            {% for err in form.email.errors %} {{ err }} {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    {{ form.password.label(class="form-label") }}
+                    {{ form.password(class="form-control", placeholder="Enter password") }}
+                    {% if form.password.errors %}
+                        <div class="text-danger small mt-1">
+                            {% for err in form.password.errors %} {{ err }} {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="mb-3">
+                    {{ form.confirm_password.label(class="form-label") }}
+                    {{ form.confirm_password(class="form-control", placeholder="Confirm password") }}
+                    {% if form.confirm_password.errors %}
+                        <div class="text-danger small mt-1">
+                            {% for err in form.confirm_password.errors %} {{ err }} {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Role -->
+                <div class="mb-3">
+                    {{ form.role.label(class="form-label") }}
+                    {{ form.role(class="form-select") }}
+                    {% if form.role.errors %}
+                        <div class="text-danger small mt-1">
+                            {% for err in form.role.errors %} {{ err }} {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create User</button>
+                <a href="{{ url_for('auth.list_users') }}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Toast function
+    function showToast(message, type='info'){
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = `toast align-items-center text-bg-${type} border-0 mb-2`;
+        toast.role = 'alert';
+        toast.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body">${message}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>`;
+        container.appendChild(toast);
+        const bsToast = new bootstrap.Toast(toast, { delay: 4000 });
+        bsToast.show();
+        toast.addEventListener('hidden.bs.toast', () => toast.remove());
+    }
+
+    // Show flash messages from server
+    const flashDiv = document.getElementById('flash-messages');
+    if(flashDiv){
+        Array.from(flashDiv.children).forEach(div => {
+            const category = div.dataset.category;
+            const message = div.dataset.message;
+            const typeMap = { success:'success', error:'danger', danger:'danger', warning:'warning', info:'info' };
+            showToast(message, typeMap[category.toLowerCase()] || 'info');
+        });
+    }
+
+});
+</script>
+{% endblock %}
