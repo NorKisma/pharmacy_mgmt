@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pharmacy Management System</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Swiper Slider -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+    <!-- Dark Mode & Landing JS -->
+    <script src="{{ url_for('static', filename='js/landing.js') }}" defer></script>
+</head>
+<body>
+
+<!-- 🌙 Dark Mode Button -->
+<button class="dark-toggle" id="darkToggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">🌙</button>
+
+<!-- 🌐 NAVBAR -->
+<nav class="navbar" data-aos="fade-down" role="navigation" aria-label="Main Navigation">
+    <div class="logo">
+        <a href="/" aria-label="Home">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="PharmacyMS logo">
+        </a>
+        <span>PharmacyMS</span>
+    </div>
+
+    <ul class="nav-links" role="menu" aria-hidden="true">
+        <li role="none"><a role="menuitem" href="#features">Features</a></li>
+        <li role="none"><a role="menuitem" href="#ai">AI</a></li>
+        <li role="none"><a role="menuitem" href="#testimonials">Testimonials</a></li>
+        <li role="none"><a role="menuitem" href="#pricing">Pricing</a></li>
+        <li role="none"><a role="menuitem" href="#all-features">All Features</a></li>
+        <li role="none"><a role="menuitem" href="#faq">FAQ</a></li>
+    </ul>
+
+    <div class="nav-actions">
+        <a href="{{ url_for('auth.login') }}" class="btn-nav">Login</a>
+        <a href="{{ url_for('auth.register') }}" class="btn-nav-primary">Sign Up</a>
+    </div>
+
+    <button class="nav-toggle" aria-label="Open menu" onclick="toggleMenu()">☰</button>
+</nav>
+
+<!-- =============== HERO SECTION =============== -->
+<section class="hero" data-aos="fade-up">
+    <div class="content">
+        <h1>The Future of Pharmacy Automation</h1>
+        <p>AI-powered POS, inventory, expiry alerts, smart reports & multilingual support — everything in one system.</p>
+        <div class="actions">
+            <a href="{{ url_for('auth.register') }}" class="btn-primary">Get Started</a>
+            <a href="#features" class="btn-secondary-outline">Explore Features</a>
+        </div>
+    </div>
+    <img src="{{ url_for('static', filename='images/hero.png') }}" class="hero-img" data-aos="fade-left">
+</section>
+
+<!-- =============== FEATURES SLIDER =============== -->
+<section id="features" class="carousel-section" data-aos="fade-up">
+    <h2>Core Features</h2>
+    <p class="section-desc">Built for pharmacies of all sizes — simple, powerful, fast.</p>
+    <div class="swiper featureSwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide card">
+                <img src="{{ url_for('static', filename='images/feature1.png') }}">
+                <h3>AI Expiry Alerts</h3>
+                <p>Predict & detect expiry before it happens.</p>
+            </div>
+            <div class="swiper-slide card">
+                <img src="{{ url_for('static', filename='images/feature2.png') }}">
+                <h3>Smart POS</h3>
+                <p>Lightning-fast POS + invoice printing.</p>
+            </div>
+            <div class="swiper-slide card">
+                <img src="{{ url_for('static', filename='images/feature3.png') }}">
+                <h3>Auto Reorder</h3>
+                <p>AI recommends stock before it runs out.</p>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</section>
+
+<!-- =============== AI SECTION =============== -->
+<section id="ai" class="ai" data-aos="zoom-in">
+    <h2>AI Automation</h2>
+    <p class="section-desc">AI that analyzes sales, expiry, stock movement & generates smart insights.</p>
+    <div class="ai-grid">
+        <div class="ai-card">🤖 <strong>Auto Reorder</strong><p>Never run out of stock again.</p></div>
+        <div class="ai-card">🔔 <strong>Expiry Detection</strong><p>Prevent losses before they happen.</p></div>
+        <div class="ai-card">📁 <strong>AI PDF Reports</strong><p>Daily, monthly & profit/loss insights.</p></div>
+    </div>
+</section>
+
+<!-- =============== TESTIMONIAL SLIDER =============== -->
+<section id="testimonials" class="testimonials" data-aos="fade-up">
+    <h2>Trusted By Pharmacies</h2>
+    <div class="swiper testimonialSwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide testimonial-card">
+                <img src="{{ url_for('static', filename='images/testimonial1.png') }}">
+                <p>“Reduced expiry losses by 80%. AI helped us reorder smartly.”</p>
+                <h4>- Mohamed, Al Hikma Pharmacy</h4>
+            </div>
+            <div class="swiper-slide testimonial-card">
+                <img src="{{ url_for('static', filename='images/testimonial1.png') }}">
+                <p>“POS is fast and AI reports are next level!”</p>
+                <h4>- Aisha, CityCare Pharmacy</h4>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</section>
+
+<!-- =============== PRICING SECTION =============== -->
+<section id="pricing" class="pricing" data-aos="fade-up">
+    <h2>Pricing</h2>
+    <p class="section-desc">Choose the right plan for your pharmacy.</p>
+    <div class="pricing-grid">
+        <div class="price-card">
+            <h3>Starter</h3>
+            <p class="price">$19/month</p>
+            <ul>
+                <li>POS + Inventory</li>
+                <li>Suppliers + Purchases</li>
+                <li>Basic Reports</li>
+            </ul>
+            <a href="{{ url_for('auth.register') }}" class="btn-primary">Start Now</a>
+        </div>
+        <div class="price-card popular">
+            <h3>Professional</h3>
+            <p class="price">$39/month</p>
+            <ul>
+                <li>AI Expiry Alerts</li>
+                <li>Auto Reorder</li>
+                <li>Profit/Loss Reports</li>
+                <li>Full Stock Tracking</li>
+            </ul>
+            <a href="{{ url_for('auth.register') }}" class="btn-primary">Start Now</a>
+        </div>
+        <div class="price-card">
+            <h3>Enterprise</h3>
+            <p class="price">Custom</p>
+            <ul>
+                <li>Multi-branch Sync</li>
+                <li>Advanced AI Forecast</li>
+                <li>24/7 Support</li>
+            </ul>
+            <a href="{{ url_for('auth.register') }}" class="btn-primary">Contact Sales</a>
+        </div>
+    </div>
+</section>
+
+<!-- =============== ALL FEATURES GRID =============== -->
+<section id="all-features" class="all-features" data-aos="fade-up">
+    <h2>All Features</h2>
+    <p class="section-desc">Everything your pharmacy needs in one platform.</p>
+    <div class="features-grid">
+        <div class="feature-box"><h3>POS & Sales</h3><p>Fast invoicing, barcode scanning, and multi-currency support.</p></div>
+        <div class="feature-box"><h3>Inventory Management</h3><p>Track stock, receive alerts, and manage suppliers efficiently.</p></div>
+        <div class="feature-box"><h3>AI Analytics</h3><p>Smart insights, profit/loss reports, and stock forecasting.</p></div>
+        <div class="feature-box"><h3>Expiry & Alerts</h3><p>Detect expiring medicines before losses happen.</p></div>
+        <div class="feature-box"><h3>Multi-branch</h3><p>Sync stock, sales, and staff across multiple branches.</p></div>
+        <div class="feature-box"><h3>Reports</h3><p>Daily, monthly, and yearly reports exportable as PDF or Excel.</p></div>
+    </div>
+</section>
+
+<!-- =============== FAQ SECTION =============== -->
+<section id="faq" class="all-features" data-aos="fade-up">
+    <h2>Frequently Asked Questions</h2>
+    <div class="features-grid">
+        <div class="feature-box"><h3>Can I try before subscribing?</h3><p>Yes, we offer a 14-day free trial with full access to features.</p></div>
+        <div class="feature-box"><h3>Is AI data secure?</h3><p>All your data is encrypted and stored securely on our servers.</p></div>
+        <div class="feature-box"><h3>Can I switch plans later?</h3><p>Absolutely! You can upgrade or downgrade anytime.</p></div>
+    </div>
+</section>
+
+<!-- =============== FOOTER =============== -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-left">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+            <p>PharmacyMS — AI-powered pharmacy automation.</p>
+        </div>
+        <div class="footer-links">
+            <a href="#features">Features</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#ai">AI</a>
+            <a href="{{ url_for('auth.login') }}">Login</a>
+        </div>
+    </div>
+    <p class="footer-bottom">© {{ year }} Pharmacy Management System | Built with Flask + AI</p>
+</footer>
+
+<!-- JS: AOS + SWIPER -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+</body>
+</html>

@@ -8,8 +8,8 @@ from werkzeug.security import generate_password_hash
 load_dotenv()
 
 # Admin credentials
-ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "admin@pharmacy.com")
-ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "admin123")
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "nor.jws@gmail.com")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "123123")
 
 # Predefined roles and their permissions
 ROLES_PERMISSIONS = {

@@ -39,6 +39,7 @@ def create_app(config_name=None):
     # ---------------------------
     # Register blueprints
     # ---------------------------
+    from app.landing.routes import landing_bp
     from .auth.routes import bp as auth_bp
     from .main.routes import bp as main_bp
     from .customers.routes import bp as customer_bp
@@ -46,8 +47,9 @@ def create_app(config_name=None):
     from .purchases.routes import bp as purchase_bp
     from .medicines.routes import bp as medicine_bp
     from .sales.routes import bp as sale_bp
-
-    app.register_blueprint(main_bp, url_prefix="/")
+   # REGISTER BLUEPRINTS
+    app.register_blueprint(landing_bp,url_prefix="/")
+    app.register_blueprint(main_bp, url_prefix="/Dashboard")
     app.register_blueprint(auth_bp, url_prefix="/auth")
     app.register_blueprint(customer_bp, url_prefix="/customers")
     app.register_blueprint(supplier_bp, url_prefix="/suppliers")

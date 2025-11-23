@@ -6,22 +6,18 @@ from ..utils import log_action
 # --------------------------
 # Blueprint
 # --------------------------
-bp = Blueprint("main", __name__, template_folder='templates')
+bp = Blueprint("main", __name__, template_folder='templates', url_prefix='/main')
+
 
 # --------------------------
 # Dashboard
 # --------------------------
-@bp.route('/')
+@bp.route('/dashboard')
+#@login_required
 def dashboard():
-    if current_user.is_authenticated:
-        if current_user.role == "admin":
-            return redirect(url_for('admin.dashboard'))
-        else:
-            return redirect(url_for('staff.dashboard'))
-    else:
-        return redirect(url_for('auth.login'))
-
-
+    if current_user.role == 'admin':
+       return redirect(url_for('admin.dashboard'))
+    return render_template('main/dashboard.html', user=current_user)
 
 
 # --------------------------
