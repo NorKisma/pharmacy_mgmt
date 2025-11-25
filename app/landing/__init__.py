@@ -1,9 +1,6 @@
 
-
 from flask import Blueprint
 
+landing_bp = Blueprint("landing", __name__, url_prefix="/")
 
-from . import routes
-from app.landing.routes import landing_bp
-app.register_blueprint(landing_bp) # type: ignore
-from . import routes
+from . import routes  # register routes after blueprint is created

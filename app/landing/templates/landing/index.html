@@ -2,204 +2,614 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Pharmacy Management System</title>
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
-
-    <!-- AOS Animation -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-    <!-- Swiper Slider -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ray's Pharmacy - AI-Powered Automation</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Swiper Slider CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <!-- Load AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        /* Configure Tailwind to use Inter font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        :root {
+            --color-primary: #10b981; /* emerald-600 */
+        }
 
-    <!-- Dark Mode & Landing JS -->
-    <script src="{{ url_for('static', filename='js/landing.js') }}" defer></script>
+        /* Base styles for Inter font and smooth transitions */
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Custom scrollbar for aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-primary);
+            border-radius: 4px;
+        }
+        
+        /* Dark Toggle Button Styling */
+        .dark-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 50;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 9999px;
+            background-color: #f3f4f6;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border: 2px solid var(--color-primary);
+        }
+        .dark .dark-toggle {
+            background-color: #1f2937;
+            color: #f3f4f6;
+            border-color: #d1d5db; /* Light border in dark mode */
+        }
+
+        /* Swiper overrides for mobile layout */
+        .swiper-slide {
+            width: 300px;
+            flex-shrink: 0;
+            margin-right: 1.5rem; /* Gap between cards */
+        }
+        
+        .featureSwiper .swiper-wrapper {
+            /* Enable horizontal scrolling on mobile */
+            padding-bottom: 2rem;
+        }
+
+        /* Responsive Menu styles */
+        .nav-links.active {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 4rem; 
+            left: 0;
+            width: 100%;
+            background-color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 40;
+        }
+        .dark .nav-links.active {
+            background-color: #1f2937;
+        }
+
+        @media (min-width: 768px) {
+            .nav-links.active {
+                position: static;
+                flex-direction: row;
+                width: auto;
+                box-shadow: none;
+                padding: 0;
+            }
+            .nav-toggle {
+                display: none;
+            }
+        }
+        
+        .nav-links li a {
+            padding: 0.5rem 1rem;
+            display: block;
+        }
+
+        /* Style the popular pricing card */
+        .popular {
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.5), 0 4px 6px -4px rgba(16, 185, 129, 0.5);
+            border: 3px solid var(--color-primary);
+        }
+        .popular::before {
+            content: "Most Popular";
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--color-primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+    </style>
+    <!-- Tailwind Configuration (Using emerald/green as primary) -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': {
+                            '50': '#f0fdf4',
+                            '100': '#dcfce7',
+                            '200': '#bbf7d0',
+                            '300': '#86efac',
+                            '400': '#4ade80',
+                            '500': '#22c55e',
+                            '600': '#10b981', /* Main color: Emerald-600 */
+                            '700': '#047857',
+                            '800': '#065f46',
+                            '900': '#064e3b',
+                            '950': '#022c22',
+                        },
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
 
-<!-- 🌙 Dark Mode Button -->
-<button class="dark-toggle" id="darkToggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">🌙</button>
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
 
-<!-- 🌐 NAVBAR -->
-<nav class="navbar" data-aos="fade-down" role="navigation" aria-label="Main Navigation">
-    <div class="logo">
-        <a href="/" aria-label="Home">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="PharmacyMS logo">
-        </a>
-        <span>PharmacyMS</span>
+<!-- 🌙 Dark Mode Button (Fixed Position) -->
+<button class="dark-toggle" id="darkToggle" aria-label="Toggle dark mode">🌙</button>
+
+<!-- 🌐 NAVBAR (Sticky Header) -->
+<nav class="sticky top-0 z-40 w-full bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-md" data-aos="fade-down" role="navigation" aria-label="Main Navigation">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+        <!-- Logo -->
+        <div class="flex items-center space-x-2">
+            <a href="#" class="flex items-center" aria-label="Home">
+                <!-- Logo Icon (R) -->
+                <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary-600 text-white font-bold text-xl shadow-md">R</div>
+                <span class="text-xl font-bold text-primary-600 ml-2">Ray's Pharmacy</span>
+            </a>
+        </div>
+
+        <!-- Desktop Links & Mobile Menu Container -->
+        <ul id="navLinks" class="nav-links hidden md:flex space-x-6 text-sm font-medium" role="menu">
+            <li role="none"><a role="menuitem" href="#features" class="hover:text-primary-600 transition">Features</a></li>
+            <li role="none"><a role="menuitem" href="#ai" class="hover:text-primary-600 transition">AI Automation</a></li>
+            <li role="none"><a role="menuitem" href="#testimonials" class="hover:text-primary-600 transition">Testimonials</a></li>
+            <li role="none"><a role="menuitem" href="#pricing" class="hover:text-primary-600 transition">Pricing</a></li>
+            <li role="none"><a role="menuitem" href="#all-features" class="hover:text-primary-600 transition">Full Feature Set</a></li>
+            <li role="none"><a role="menuitem" href="#faq" class="hover:text-primary-600 transition">FAQ</a></li>
+        </ul>
+
+        <!-- Actions & Mobile Toggle -->
+        <div class="flex items-center space-x-4">
+            <div class="hidden md:flex space-x-3">
+                <a href="{{ url_for('auth.login') }}" class="text-sm font-medium px-3 py-1.5 rounded-lg border border-primary-600 text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-950 transition">Login</a>
+                <a href="#" class="text-sm font-medium px-4 py-1.5 rounded-lg bg-primary-600 text-white shadow-md hover:bg-primary-700 transition">Sign Up</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button id="navToggle" class="nav-toggle md:hidden text-2xl p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition" aria-label="Open menu">
+                <!-- SVG Icon for Menu -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
     </div>
-
-    <ul class="nav-links" role="menu" aria-hidden="true">
-        <li role="none"><a role="menuitem" href="#features">Features</a></li>
-        <li role="none"><a role="menuitem" href="#ai">AI</a></li>
-        <li role="none"><a role="menuitem" href="#testimonials">Testimonials</a></li>
-        <li role="none"><a role="menuitem" href="#pricing">Pricing</a></li>
-        <li role="none"><a role="menuitem" href="#all-features">All Features</a></li>
-        <li role="none"><a role="menuitem" href="#faq">FAQ</a></li>
-    </ul>
-
-    <div class="nav-actions">
-        <a href="{{ url_for('auth.login') }}" class="btn-nav">Login</a>
-        <a href="{{ url_for('auth.register') }}" class="btn-nav-primary">Sign Up</a>
-    </div>
-
-    <button class="nav-toggle" aria-label="Open menu" onclick="toggleMenu()">☰</button>
 </nav>
 
 <!-- =============== HERO SECTION =============== -->
-<section class="hero" data-aos="fade-up">
-    <div class="content">
-        <h1>The Future of Pharmacy Automation</h1>
-        <p>AI-powered POS, inventory, expiry alerts, smart reports & multilingual support — everything in one system.</p>
-        <div class="actions">
-            <a href="{{ url_for('auth.register') }}" class="btn-primary">Get Started</a>
-            <a href="#features" class="btn-secondary-outline">Explore Features</a>
+<section class="hero py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800" data-aos="fade-up">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+        <div class="content md:w-1/2" data-aos="fade-right">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-gray-900 dark:text-white">
+                The Future of <span class="text-primary-600">Pharmacy Automation</span>
+            </h1>
+            <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">
+                AI-powered POS, inventory, expiry alerts, smart reports & multilingual support — everything in one system to maximize profit and efficiency.
+            </p>
+            <div class="actions mt-8 flex flex-col sm:flex-row gap-4">
+                <a href="#" class="px-8 py-3 text-lg font-semibold rounded-xl bg-primary-600 text-white shadow-xl hover:bg-primary-700 transition transform hover:scale-[1.02]">Get Started Free</a>
+                <a href="#features" class="px-8 py-3 text-lg font-semibold rounded-xl border-2 border-primary-600 text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-950 transition">Explore Features</a>
+            </div>
+        </div>
+        <!-- Hero Image Placeholder (Dashboard Mockup) -->
+        <div class="md:w-1/2 w-full flex justify-center" data-aos="fade-left">
+            <img 
+                src="https://placehold.co/1200x600/10B981/ffffff?text=AI+Powered+Dashboard+Interface" 
+                alt="Pharmacy Management Dashboard Interface Mockup" 
+                class="rounded-2xl shadow-2xl w-full max-w-lg md:max-w-full border-4 border-white dark:border-gray-700"
+            >
         </div>
     </div>
-    <img src="{{ url_for('static', filename='images/hero.png') }}" class="hero-img" data-aos="fade-left">
 </section>
 
 <!-- =============== FEATURES SLIDER =============== -->
-<section id="features" class="carousel-section" data-aos="fade-up">
-    <h2>Core Features</h2>
-    <p class="section-desc">Built for pharmacies of all sizes — simple, powerful, fast.</p>
-    <div class="swiper featureSwiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide card">
-                <img src="{{ url_for('static', filename='images/feature1.png') }}">
-                <h3>AI Expiry Alerts</h3>
-                <p>Predict & detect expiry before it happens.</p>
+<section id="features" class="carousel-section py-16 px-4 sm:px-6 lg:px-8" data-aos="fade-up">
+    <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Core Features</h2>
+        <p class="section-desc mt-3 text-gray-600 dark:text-gray-400">Built for pharmacies of all sizes — simple, powerful, fast.</p>
+        
+        <div class="swiper featureSwiper mt-10">
+            <div class="swiper-wrapper justify-center">
+                <!-- Feature 1: AI Expiry Alerts -->
+                <div class="swiper-slide rounded-xl p-6 bg-white dark:bg-gray-800 shadow-lg border border-gray-100 dark:border-gray-700 transition hover:shadow-primary-300/50 hover:shadow-xl">
+                    <img src="https://placehold.co/300x200/FBBF24/ffffff?text=Expiry+Alert+Icon" class="w-full h-auto rounded-lg mb-4" alt="AI Expiry Alerts Icon">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">AI Expiry Alerts</h3>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2">Predict & detect expiry before it happens, minimizing financial losses on stock.</p>
+                </div>
+                <!-- Feature 2: Smart POS -->
+                <div class="swiper-slide rounded-xl p-6 bg-white dark:bg-gray-800 shadow-lg border border-gray-100 dark:border-gray-700 transition hover:shadow-primary-300/50 hover:shadow-xl">
+                    <img src="https://placehold.co/300x200/3B82F6/ffffff?text=POS+System+Icon" class="w-full h-auto rounded-lg mb-4" alt="Smart POS System Icon">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Smart POS</h3>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2">Lightning-fast Point of Sale with integrated barcode scanning and customizable invoicing.</p>
+                </div>
+                <!-- Feature 3: Auto Reorder -->
+                <div class="swiper-slide rounded-xl p-6 bg-white dark:bg-gray-800 shadow-lg border border-gray-100 dark:border-gray-700 transition hover:shadow-primary-300/50 hover:shadow-xl">
+                    <img src="https://placehold.co/300x200/EF4444/ffffff?text=Reorder+Forecast+Icon" class="w-full h-auto rounded-lg mb-4" alt="Auto Reorder System Icon">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Auto Reorder</h3>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2">AI recommends stock before it runs out, intelligently optimizing inventory levels based on demand.</p>
+                </div>
+                <!-- Feature 4: Multi-Branch Sync -->
+                 <div class="swiper-slide rounded-xl p-6 bg-white dark:bg-gray-800 shadow-lg border border-gray-100 dark:border-gray-700 transition hover:shadow-primary-300/50 hover:shadow-xl">
+                    <img src="https://placehold.co/300x200/34D399/ffffff?text=Sync+Icon" class="w-full h-auto rounded-lg mb-4" alt="Multi-Branch Sync Icon">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Multi-Branch Sync</h3>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2">Manage all your pharmacy locations from a single dashboard with real-time stock synchronization.</p>
+                </div>
             </div>
-            <div class="swiper-slide card">
-                <img src="{{ url_for('static', filename='images/feature2.png') }}">
-                <h3>Smart POS</h3>
-                <p>Lightning-fast POS + invoice printing.</p>
-            </div>
-            <div class="swiper-slide card">
-                <img src="{{ url_for('static', filename='images/feature3.png') }}">
-                <h3>Auto Reorder</h3>
-                <p>AI recommends stock before it runs out.</p>
-            </div>
+            <div class="swiper-pagination mt-6"></div>
         </div>
-        <div class="swiper-pagination"></div>
     </div>
 </section>
 
-<!-- =============== AI SECTION =============== -->
-<section id="ai" class="ai" data-aos="zoom-in">
-    <h2>AI Automation</h2>
-    <p class="section-desc">AI that analyzes sales, expiry, stock movement & generates smart insights.</p>
-    <div class="ai-grid">
-        <div class="ai-card">🤖 <strong>Auto Reorder</strong><p>Never run out of stock again.</p></div>
-        <div class="ai-card">🔔 <strong>Expiry Detection</strong><p>Prevent losses before they happen.</p></div>
-        <div class="ai-card">📁 <strong>AI PDF Reports</strong><p>Daily, monthly & profit/loss insights.</p></div>
+<!-- =============== AI SECTION (Expanded) =============== -->
+<section id="ai" class="ai py-16 px-4 sm:px-6 lg:px-8 bg-primary-50 dark:bg-gray-800/50" data-aos="zoom-in">
+    <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Deep AI Automation</h2>
+        <p class="section-desc mt-3 text-gray-600 dark:text-gray-400">AI that analyzes sales, expiry, stock movement & generates smart insights, turning data into dollars.</p>
+        <div class="ai-grid mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="ai-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-lg border-b-4 border-primary-600 hover:shadow-2xl transition">
+                <p class="text-3xl mb-3 text-primary-600">📈</p>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Demand Forecasting</h3>
+                <p class="text-gray-500 dark:text-gray-300 mt-2">Predicts demand based on seasonal trends and historical sales data to prevent stockouts.</p>
+            </div>
+            <div class="ai-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-lg border-b-4 border-primary-600 hover:shadow-2xl transition">
+                <p class="text-3xl mb-3 text-primary-600">🚨</p>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Expiry Detection</h3>
+                <p class="text-gray-500 dark:text-gray-300 mt-2">Prevent losses by giving you timely, precise alerts on soon-to-expire medicines by FIFO optimization.</p>
+            </div>
+            <div class="ai-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-lg border-b-4 border-primary-600 hover:shadow-2xl transition">
+                <p class="text-3xl mb-3 text-primary-600">💰</p>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Profit Leak Analysis</h3>
+                <p class="text-gray-500 dark:text-gray-300 mt-2">Highlights missed savings, discrepancies, and inefficient purchasing habits to boost margins.</p>
+            </div>
+            <div class="ai-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-lg border-b-4 border-primary-600 hover:shadow-2xl transition">
+                <p class="text-3xl mb-3 text-primary-600">🌎</p>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Multilingual Reports</h3>
+                <p class="text-gray-500 dark:text-gray-300 mt-2">Automatically generates regulatory-compliant PDF reports in your preferred regional language.</p>
+            </div>
+        </div>
     </div>
 </section>
 
 <!-- =============== TESTIMONIAL SLIDER =============== -->
-<section id="testimonials" class="testimonials" data-aos="fade-up">
-    <h2>Trusted By Pharmacies</h2>
-    <div class="swiper testimonialSwiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide testimonial-card">
-                <img src="{{ url_for('static', filename='images/testimonial1.png') }}">
-                <p>“Reduced expiry losses by 80%. AI helped us reorder smartly.”</p>
-                <h4>- Mohamed, Al Hikma Pharmacy</h4>
+<section id="testimonials" class="testimonials py-16 px-4 sm:px-6 lg:px-8" data-aos="fade-up">
+    <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Trusted By Pharmacies Worldwide</h2>
+        <p class="section-desc mt-3 text-gray-600 dark:text-gray-400">Hear from our satisfied customers who have revolutionized their operations.</p>
+        
+        <div class="swiper testimonialSwiper mt-10">
+            <div class="swiper-wrapper justify-center">
+                <!-- Testimonial 1 -->
+                <div class="swiper-slide testimonial-card rounded-xl p-8 bg-white dark:bg-gray-800 shadow-xl border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center max-w-sm">
+                    <img src="https://placehold.co/80x80/6B7280/ffffff?text=M" class="w-20 h-20 rounded-full object-cover mb-4 ring-4 ring-primary-600" alt="Avatar Mohamed">
+                    <p class="text-lg italic text-gray-700 dark:text-gray-300 mb-4">“Reduced expiry losses by 80%. AI helped us reorder smartly. This system is a game-changer for managing profitability.”</p>
+                    <h4 class="font-semibold text-primary-600">- Mohamed, Al Hikma Pharmacy</h4>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Cairo, Egypt</p>
+                </div>
+                <!-- Testimonial 2 -->
+                <div class="swiper-slide testimonial-card rounded-xl p-8 bg-white dark:bg-gray-800 shadow-xl border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center max-w-sm">
+                    <img src="https://placehold.co/80x80/6B7280/ffffff?text=A" class="w-20 h-20 rounded-full object-cover mb-4 ring-4 ring-primary-600" alt="Avatar Aisha">
+                    <p class="text-lg italic text-gray-700 dark:text-gray-300 mb-4">“The POS is lightning-fast and the AI reports are next level! It took the guesswork out of my end-of-day reconciliation.”</p>
+                    <h4 class="font-semibold text-primary-600">- Aisha, City Drug Store</h4>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Lagos, Nigeria</p>
+                </div>
+                <!-- Testimonial 3 -->
+                <div class="swiper-slide testimonial-card rounded-xl p-8 bg-white dark:bg-gray-800 shadow-xl border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center max-w-sm">
+                    <img src="https://placehold.co/80x80/6B7280/ffffff?text=J" class="w-20 h-20 rounded-full object-cover mb-4 ring-4 ring-primary-600" alt="Avatar Jane">
+                    <p class="text-lg italic text-gray-700 dark:text-gray-300 mb-4">“Setting up multiple branches was seamless. Stock synchronization works perfectly across all our locations.”</p>
+                    <h4 class="font-semibold text-primary-600">- Jian Li, Wellness Pharma</h4>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Shanghai, China</p>
+                </div>
             </div>
-            <div class="swiper-slide testimonial-card">
-                <img src="{{ url_for('static', filename='images/testimonial1.png') }}">
-                <p>“POS is fast and AI reports are next level!”</p>
-                <h4>- Aisha, CityCare Pharmacy</h4>
-            </div>
+            <div class="swiper-pagination mt-6"></div>
         </div>
-        <div class="swiper-pagination"></div>
     </div>
 </section>
 
 <!-- =============== PRICING SECTION =============== -->
-<section id="pricing" class="pricing" data-aos="fade-up">
-    <h2>Pricing</h2>
-    <p class="section-desc">Choose the right plan for your pharmacy.</p>
-    <div class="pricing-grid">
-        <div class="price-card">
-            <h3>Starter</h3>
-            <p class="price">$19/month</p>
-            <ul>
-                <li>POS + Inventory</li>
-                <li>Suppliers + Purchases</li>
-                <li>Basic Reports</li>
-            </ul>
-            <a href="{{ url_for('auth.register') }}" class="btn-primary">Start Now</a>
-        </div>
-        <div class="price-card popular">
-            <h3>Professional</h3>
-            <p class="price">$39/month</p>
-            <ul>
-                <li>AI Expiry Alerts</li>
-                <li>Auto Reorder</li>
-                <li>Profit/Loss Reports</li>
-                <li>Full Stock Tracking</li>
-            </ul>
-            <a href="{{ url_for('auth.register') }}" class="btn-primary">Start Now</a>
-        </div>
-        <div class="price-card">
-            <h3>Enterprise</h3>
-            <p class="price">Custom</p>
-            <ul>
-                <li>Multi-branch Sync</li>
-                <li>Advanced AI Forecast</li>
-                <li>24/7 Support</li>
-            </ul>
-            <a href="{{ url_for('auth.register') }}" class="btn-primary">Contact Sales</a>
+<section id="pricing" class="pricing py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800" data-aos="fade-up">
+    <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Simple, Transparent Pricing</h2>
+        <p class="section-desc mt-3 text-gray-600 dark:text-gray-400">Choose the right plan for your pharmacy, no hidden fees. All plans include 24/7 support.</p>
+        
+        <div class="pricing-grid mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+            <!-- Starter Plan -->
+            <div class="price-card relative p-8 bg-white dark:bg-gray-900 rounded-3xl shadow-xl transition hover:shadow-primary-600/30 border border-gray-200 dark:border-gray-700">
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Starter</h3>
+                <p class="price mt-4 text-4xl font-extrabold text-primary-600">$19<span class="text-lg font-medium text-gray-500 dark:text-gray-400">/month</span></p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Ideal for single-location, independent pharmacies.</p>
+                <ul class="mt-6 space-y-3 text-left text-gray-700 dark:text-gray-300 flex-grow">
+                    <li class="flex items-start">✅ <span class="ml-3">Smart POS & Sales Processing</span></li>
+                    <li class="flex items-start">✅ <span class="ml-3">Suppliers & Purchases Tracking</span></li>
+                    <li class="flex items-start">✅ <span class="ml-3">Basic Sales/Inventory Reports</span></li>
+                    <li class="flex items-start">❌ <span class="ml-3 text-gray-400 dark:text-gray-500">AI Forecasting & Alerts</span></li>
+                    <li class="flex items-start">❌ <span class="ml-3 text-gray-400 dark:text-gray-500">Multi-branch Sync</span></li>
+                </ul>
+                <a href="#" class="mt-8 block w-full py-3 font-semibold rounded-xl bg-primary-600 text-white shadow-md hover:bg-primary-700 transition transform hover:scale-[1.01]">Start 14-Day Trial</a>
+            </div>
+            
+            <!-- Professional Plan (Popular) -->
+            <div class="price-card popular relative p-8 bg-white dark:bg-gray-900 rounded-3xl shadow-xl transition hover:shadow-primary-600/50 flex flex-col">
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Professional</h3>
+                <p class="price mt-4 text-4xl font-extrabold text-primary-600">$39<span class="text-lg font-medium text-gray-500 dark:text-gray-400">/month</span></p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">The complete AI toolkit for rapid growth.</p>
+                <ul class="mt-6 space-y-3 text-left text-gray-700 dark:text-gray-300 flex-grow">
+                    <li class="flex items-start">✅ <span class="ml-3 font-bold">AI Expiry Alerts (Save thousands)</span></li>
+                    <li class="flex items-start">✅ <span class="ml-3 font-bold">Auto Reorder & Demand Forecasting</span></li>
+                    <li class="flex items-start">✅ <span class="ml-3">Profit/Loss Reports (AI-generated)</span></li>
+                    <li class="flex items-start">✅ <span class="ml-3">Full Stock Tracking & Audits</span></li>
+                    <li class="flex items-start">✅ <span class="ml-3">Up to 3 Branches Included</span></li>
+                </ul>
+                <a href="#" class="mt-8 block w-full py-3 font-semibold rounded-xl bg-primary-600 text-white shadow-md hover:bg-primary-700 transition transform hover:scale-[1.01]">Start 14-Day Trial</a>
+            </div>
+            
+            <!-- Enterprise Plan -->
+            <div class="price-card relative p-8 bg-white dark:bg-gray-900 rounded-3xl shadow-xl transition hover:shadow-primary-600/30 border border-gray-200 dark:border-gray-700">
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Enterprise</h3>
+                <p class="price mt-4 text-4xl font-extrabold text-primary-600">Custom</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">For pharmacy groups and large chains.</p>
+                <ul class="mt-6 space-y-3 text-left text-gray-700 dark:text-gray-300 flex-grow">
+                    <li class="flex items-start">✅ <span class="ml-3">Unlimited Multi-branch Sync</span></li>
+                    <li class="flex items-start">✅ <span class="ml-3">Advanced AI Demand Forecast</span></li>
+                    <li class="flex items-start">✅ <span class="ml-3">Dedicated Account Manager</span></li>
+                    <li class="flex items-start">✅ <span class="ml-3">Custom Integrations (APIs)</span></li>
+                    <li class="flex items-start">✅ <span class="ml-3">Priority 1-Hour Response Support</span></li>
+                </ul>
+                <a href="#" class="mt-8 block w-full py-3 font-semibold rounded-xl bg-primary-600 text-white shadow-md hover:bg-primary-700 transition transform hover:scale-[1.01]">Contact Sales</a>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- =============== ALL FEATURES GRID =============== -->
-<section id="all-features" class="all-features" data-aos="fade-up">
-    <h2>All Features</h2>
-    <p class="section-desc">Everything your pharmacy needs in one platform.</p>
-    <div class="features-grid">
-        <div class="feature-box"><h3>POS & Sales</h3><p>Fast invoicing, barcode scanning, and multi-currency support.</p></div>
-        <div class="feature-box"><h3>Inventory Management</h3><p>Track stock, receive alerts, and manage suppliers efficiently.</p></div>
-        <div class="feature-box"><h3>AI Analytics</h3><p>Smart insights, profit/loss reports, and stock forecasting.</p></div>
-        <div class="feature-box"><h3>Expiry & Alerts</h3><p>Detect expiring medicines before losses happen.</p></div>
-        <div class="feature-box"><h3>Multi-branch</h3><p>Sync stock, sales, and staff across multiple branches.</p></div>
-        <div class="feature-box"><h3>Reports</h3><p>Daily, monthly, and yearly reports exportable as PDF or Excel.</p></div>
+<!-- =============== ALL FEATURES GRID (Detailed) =============== -->
+<section id="all-features" class="all-features py-16 px-4 sm:px-6 lg:px-8" data-aos="fade-up">
+    <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">The Complete Feature Set</h2>
+        <p class="section-desc mt-3 text-gray-600 dark:text-gray-400">Everything your pharmacy needs in one unified platform, guaranteed to increase operational efficiency.</p>
+        
+        <div class="features-grid mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Feature Box 1 -->
+            <div class="feature-box p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-primary-200 dark:border-primary-900 text-left">
+                <h3 class="text-xl font-semibold text-primary-600">Fast POS & Sales</h3>
+                <p class="mt-2 text-gray-500 dark:text-gray-400">Lightning-speed invoicing, integrated thermal printing, customizable receipt options, and multiple payment gateway integrations.</p>
+            </div>
+            <!-- Feature Box 2 -->
+            <div class="feature-box p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-primary-200 dark:border-primary-900 text-left">
+                <h3 class="text-xl font-semibold text-primary-600">Robust Inventory Management</h3>
+                <p class="mt-2 text-gray-500 dark:text-gray-400">Track stock levels in real-time by batch, expiry, and location. Full support for FIFO and LIFO tracking methods.</p>
+            </div>
+            <!-- Feature Box 3 -->
+            <div class="feature-box p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-primary-200 dark:border-primary-900 text-left">
+                <h3 class="text-xl font-semibold text-primary-600">AI Predictive Analytics</h3>
+                <p class="mt-2 text-gray-500 dark:text-gray-400">Smart insights, detailed profit/loss analysis, and predictive stock forecasting based on sales history and external factors.</p>
+            </div>
+            <!-- Feature Box 4 -->
+            <div class="feature-box p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-primary-200 dark:border-primary-900 text-left">
+                <h3 class="text-xl font-semibold text-primary-600">Multi-Branch Ecosystem</h3>
+                <p class="mt-2 text-gray-500 dark:text-gray-400">Manage and synchronize stock, sales, and staff seamlessly across all your pharmacy locations from a single admin panel.</p>
+            </div>
+            <!-- Feature Box 5 -->
+            <div class="feature-box p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-primary-200 dark:border-primary-900 text-left">
+                <h3 class="text-xl font-semibold text-primary-600">Secure & Regulatory Reports</h3>
+                <p class="mt-2 text-gray-500 dark:text-gray-400">Generate secure, compliant daily, monthly, and yearly financial reports, exportable as PDF, Excel, or CSV files.</p>
+            </div>
+            <!-- Feature Box 6 -->
+            <div class="feature-box p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-primary-200 dark:border-primary-900 text-left">
+                <h3 class="text-xl font-semibold text-primary-600">Staff & Access Control</h3>
+                <p class="mt-2 text-gray-500 dark:text-gray-400">Role-based access controls (RBAC) to define permissions for pharmacists, technicians, and cashiers securely.</p>
+            </div>
+        </div>
     </div>
 </section>
 
-<!-- =============== FAQ SECTION =============== -->
-<section id="faq" class="all-features" data-aos="fade-up">
-    <h2>Frequently Asked Questions</h2>
-    <div class="features-grid">
-        <div class="feature-box"><h3>Can I try before subscribing?</h3><p>Yes, we offer a 14-day free trial with full access to features.</p></div>
-        <div class="feature-box"><h3>Is AI data secure?</h3><p>All your data is encrypted and stored securely on our servers.</p></div>
-        <div class="feature-box"><h3>Can I switch plans later?</h3><p>Absolutely! You can upgrade or downgrade anytime.</p></div>
+<!-- =============== FAQ SECTION (Accordion style implicit) =============== -->
+<section id="faq" class="all-features py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50" data-aos="fade-up">
+    <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Frequently Asked Questions</h2>
+        
+        <div class="features-grid mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="feature-box text-left p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-primary-300/30 transition">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Can I try before subscribing?</h3>
+                <p class="text-gray-500 dark:text-gray-400">Yes, we offer a generous 14-day free trial with full access to all features on the Professional plan. No credit card required to start.</p>
+            </div>
+            <div class="feature-box text-left p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-primary-300/30 transition">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Is patient and inventory data secure?</h3>
+                <p class="text-gray-500 dark:text-gray-400">Absolutely. All data is encrypted end-to-end (AES-256) and stored securely on HIPAA/GDPR compliant cloud infrastructure with daily backups.</p>
+            </div>
+            <div class="feature-box text-left p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-primary-300/30 transition">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">What kind of hardware is required?</h3>
+                <p class="text-gray-500 dark:text-gray-400">Ray's Pharmacy is cloud-based, so you only need a modern web browser. It integrates with standard POS hardware like barcode scanners and thermal printers.</p>
+            </div>
+            <div class="feature-box text-left p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-primary-300/30 transition">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Is there multi-language support?</h3>
+                <p class="text-gray-500 dark:text-gray-400">Yes, the system supports multiple languages for the POS interface and reports, accommodating diverse staff and regional requirements worldwide.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =============== CTA Banner =============== -->
+<section class="py-16 px-4 sm:px-6 lg:px-8 bg-primary-600" data-aos="fade-up">
+    <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-3xl font-bold text-white">Ready to automate your pharmacy?</h2>
+        <p class="section-desc mt-3 text-primary-200">Join thousands of pharmacies increasing profitability with Ray's AI.</p>
+        <a href="#" class="mt-8 inline-block px-10 py-3 text-lg font-semibold rounded-xl bg-white text-primary-700 shadow-2xl hover:bg-gray-100 transition transform hover:scale-[1.05]">
+            Start Your Free 14-Day Trial
+        </a>
     </div>
 </section>
 
 <!-- =============== FOOTER =============== -->
-<footer class="footer">
-    <div class="footer-content">
-        <div class="footer-left">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
-            <p>PharmacyMS — AI-powered pharmacy automation.</p>
+<footer class="footer bg-gray-900 text-white py-10 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto border-t border-gray-800 pt-6">
+        <div class="footer-content flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
+            <div class="footer-left text-center md:text-left">
+                <div class="flex items-center justify-center md:justify-start">
+                    <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary-600 text-white font-bold text-xl">R</div>
+                    <span class="text-xl font-bold ml-2 text-primary-400">Ray's Pharmacy</span>
+                </div>
+                <p class="mt-3 text-gray-400">Ray's Pharmacy — AI-powered pharmacy automation for efficiency and growth.</p>
+            </div>
+            <div class="footer-links flex flex-wrap justify-center md:justify-start gap-x-6 gap-y-2 text-sm font-medium">
+                <a href="#features" class="hover:text-primary-400 transition">Features</a>
+                <a href="#pricing" class="hover:text-primary-400 transition">Pricing</a>
+                <a href="#ai" class="hover:text-primary-400 transition">AI</a>
+                <a href="#" class="hover:text-primary-400 transition">Privacy Policy</a>
+                <a href="#faq" class="hover:text-primary-400 transition">Support</a>
+            </div>
         </div>
-        <div class="footer-links">
-            <a href="#features">Features</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#ai">AI</a>
-            <a href="{{ url_for('auth.login') }}">Login</a>
-        </div>
+        <p class="footer-bottom mt-8 text-center text-sm text-gray-500">
+            © <span id="currentYear"></span> Ray's Pharmacy | Built with Automation in mind.
+        </p>
     </div>
-    <p class="footer-bottom">© {{ year }} Pharmacy Management System | Built with Flask + AI</p>
 </footer>
 
-<!-- JS: AOS + SWIPER -->
+<!-- JS: AOS + SWIPER + Custom Logic -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>AOS.init();</script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- 1. Init Third Party Libraries ---
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+
+        // Initialize Swipers
+        // Features Swiper
+        new Swiper(".featureSwiper", {
+            slidesPerView: 'auto',
+            spaceBetween: 24,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            centeredSlides: true,
+            loop: true,
+            breakpoints: {
+                768: {
+                    slidesPerView: 3,
+                    centeredSlides: false,
+                    loop: false,
+                }
+            }
+        });
+
+        // Testimonials Swiper
+        new Swiper(".testimonialSwiper", {
+            slidesPerView: 'auto',
+            spaceBetween: 24,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            loop: true,
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                    centeredSlides: false,
+                }
+            }
+        });
+
+
+        // --- 2. Custom JS Logic ---
+
+        // Footer Year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Dark Mode Toggle Logic
+        const darkToggle = document.getElementById('darkToggle');
+        const body = document.body;
+
+        const setDarkMode = (isDark) => {
+            if (isDark) {
+                body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                darkToggle.innerHTML = '☀️';
+            } else {
+                body.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                darkToggle.innerHTML = '🌙';
+            }
+        };
+
+        // Check local storage or system preference on load
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark' || (!currentTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            setDarkMode(true);
+        } else {
+            setDarkMode(false);
+        }
+
+        // Toggle button listener
+        darkToggle.addEventListener('click', () => {
+            const isDark = body.classList.contains('dark');
+            setDarkMode(!isDark);
+        });
+
+        // Mobile Menu Toggle Logic
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        const toggleMenu = () => {
+            // Use Tailwind hidden class for non-md screens, toggle active for full screen menu
+            const isMenuHidden = navLinks.classList.contains('hidden');
+            if (window.innerWidth < 768) {
+                navLinks.classList.toggle('hidden');
+            }
+            navLinks.classList.toggle('active');
+        };
+
+        navToggle.addEventListener('click', toggleMenu);
+
+        // Close menu when a link is clicked (for mobile)
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    // Check if it's currently in mobile view before toggling visibility
+                    if (window.innerWidth < 768) {
+                       navLinks.classList.add('hidden');
+                    }
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+        
+        // Ensure menu state corrects on resize
+        window.addEventListener('resize', () => {
+             if (window.innerWidth >= 768) {
+                 navLinks.classList.remove('active');
+                 navLinks.classList.remove('hidden');
+             } else {
+                // If resizing down to mobile, ensure hidden state is set if active is off
+                if (!navLinks.classList.contains('active')) {
+                     navLinks.classList.add('hidden');
+                }
+             }
+        });
+    });
+</script>
 </body>
 </html>
