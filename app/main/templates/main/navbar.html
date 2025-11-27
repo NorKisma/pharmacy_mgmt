@@ -1,34 +1,33 @@
 <nav class="navbar navbar-expand-lg navbar-custom text-white" id="mainNavbar">
   <div class="container-fluid">
 
-    <!-- Sidebar toggle for small screens -->
     <div class="d-flex align-items-center">
       <i class="fa fa-bars toggle-btn me-2" id="navbarSidebarToggle"></i>
       <span class="navbar-brand mb-0 h1 text-white">Pharmacy Dashboard</span>
     </div>
 
-    <!-- Sidebar toggle for large screens -->
     <button id="sidebarToggle" class="navbar-toggler text-white" type="button">
       <span><i class="fa fa-bars"></i></span>
     </button>
 
     <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
       <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
-
-        {% if current_user.is_authenticated %}
-          <!-- User Greeting -->
+ {% if current_user.is_authenticated %}
           <li class="nav-item me-3">
             <span class="nav-link text-white">Welcome, {{ current_user.name }} </span>
           </li>
-
-          <!-- Logout -->
+       
+ <li class="nav-item ms-3">
+          <button id="themeToggle" class="btn btn-outline-light btn-sm" title="Toggle Dark Mode">
+            <i id="themeIcon" class="fas fa-moon"></i>
+          </button>
+        </li>
           <li class="nav-item ms-3">
             <a class="nav-link text-white" href="{{ url_for('auth.logout') }}">
               <i class="fas fa-sign-out-alt me-1"></i> Logout
             </a>
           </li>
         {% else %}
-          <!-- Login -->
           <li class="nav-item ms-3">
             <a class="nav-link text-white" href="{{ url_for('auth.login') }}">
               <i class="fas fa-sign-in-alt me-1"></i> Login
@@ -36,14 +35,8 @@
           </li>
         {% endif %}
 
-        <!-- Dark Mode Toggle -->
-        <li class="nav-item ms-3">
-          <button id="themeToggle" class="btn btn-outline-light btn-sm" title="Toggle Dark Mode">
-            <i id="themeIcon" class="fas fa-moon"></i>
-          </button>
-        </li>
+       
 
-        <!-- Language Selector -->
         <li class="nav-item ms-3 dropdown">
           <a class="nav-link dropdown-toggle text-white" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-language me-1"></i> Language

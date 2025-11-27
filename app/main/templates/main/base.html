@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
+ {% include 'main/head.html' %}
     {% block head %}{% endblock %}
 </head>
 
@@ -33,80 +33,6 @@
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
 
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('main-content');
-        const toggleBtn = document.getElementById('sidebarToggle');
-        const navbarToggle = document.getElementById('navbarSidebarToggle');
-        const overlay = document.getElementById('overlay');
-
-        function toggleSidebar() {
-            if (window.innerWidth <= 768) {
-                // Mobile View: Slide sidebar open/closed
-                sidebar.classList.toggle('open');
-                overlay.classList.toggle('active');
-            } else {
-                // Desktop View: Collapse/Expand sidebar
-                sidebar.classList.toggle('collapsed');
-                mainContent.classList.toggle('expanded');
-            }
-        }
-
-        if (toggleBtn) toggleBtn.addEventListener('click', toggleSidebar);
-        if (navbarToggle) navbarToggle.addEventListener('click', toggleSidebar);
-
-        if (overlay) {
-            overlay.addEventListener('click', () => {
-                sidebar.classList.remove('open');
-                overlay.classList.remove('active');
-            });
-        }
-    });
-
-    </script>
-
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const toggleBtn = document.getElementById("themeToggle");
-        const themeIcon = document.getElementById("themeIcon");
-        const navbar = document.getElementById("mainNavbar"); // Assuming your navbar partial has this ID
-        
-        // Load saved theme
-        const savedTheme = localStorage.getItem("theme") || "light";
-        document.body.classList.toggle("dark-mode", savedTheme === "dark");
-        updateThemeUI(savedTheme);
-        
-        // Toggle theme on click
-        if (toggleBtn) {
-            toggleBtn.addEventListener("click", function () {
-                const isDark = document.body.classList.toggle("dark-mode");
-                const newTheme = isDark ? "dark" : "light";
-                localStorage.setItem("theme", newTheme);
-                updateThemeUI(newTheme);
-            });
-        }
-        
-        // Update icon and navbar color
-        function updateThemeUI(theme) {
-            if (theme === "dark") {
-                themeIcon.classList.replace("fa-moon", "fa-sun");
-                // Switch navbar to Bootstrap dark theme
-                if (navbar) {
-                    navbar.classList.add("navbar-dark", "bg-dark");
-                    navbar.classList.remove("navbar-custom", "text-white");
-                }
-            } else {
-                themeIcon.classList.replace("fa-sun", "fa-moon");
-                // Switch navbar to custom/light theme
-                if (navbar) {
-                    navbar.classList.remove("bg-dark");
-                    navbar.classList.add("navbar-custom", "text-white");
-                }
-            }
-        }
-    });
-    </script>
     
     {% block scripts %}{% endblock %}
 </body>

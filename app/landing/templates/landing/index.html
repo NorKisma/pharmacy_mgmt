@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ray's Pharmacy - AI-Powered Automation</title>
-    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Swiper Slider CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-    <!-- Load AOS Animation CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
@@ -70,6 +67,10 @@
             /* Enable horizontal scrolling on mobile */
             padding-bottom: 2rem;
         }
+        .testimonialSwiper .swiper-wrapper {
+             /* Enable horizontal scrolling on mobile */
+            padding-bottom: 2rem;
+        }
 
         /* Responsive Menu styles */
         .nav-links.active {
@@ -126,7 +127,6 @@
         }
 
     </style>
-    <!-- Tailwind Configuration (Using emerald/green as primary) -->
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -155,22 +155,16 @@
 
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
 
-<!-- 🌙 Dark Mode Button (Fixed Position) -->
-<button class="dark-toggle" id="darkToggle" aria-label="Toggle dark mode">🌙</button>
 
-<!-- 🌐 NAVBAR (Sticky Header) -->
 <nav class="sticky top-0 z-40 w-full bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-md" data-aos="fade-down" role="navigation" aria-label="Main Navigation">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-        <!-- Logo -->
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center space-x-1">
             <a href="#" class="flex items-center" aria-label="Home">
-                <!-- Logo Icon (R) -->
                 <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary-600 text-white font-bold text-xl shadow-md">R</div>
                 <span class="text-xl font-bold text-primary-600 ml-2">Ray's Pharmacy</span>
             </a>
         </div>
 
-        <!-- Desktop Links & Mobile Menu Container -->
         <ul id="navLinks" class="nav-links hidden md:flex space-x-6 text-sm font-medium" role="menu">
             <li role="none"><a role="menuitem" href="#features" class="hover:text-primary-600 transition">Features</a></li>
             <li role="none"><a role="menuitem" href="#ai" class="hover:text-primary-600 transition">AI Automation</a></li>
@@ -178,26 +172,29 @@
             <li role="none"><a role="menuitem" href="#pricing" class="hover:text-primary-600 transition">Pricing</a></li>
             <li role="none"><a role="menuitem" href="#all-features" class="hover:text-primary-600 transition">Full Feature Set</a></li>
             <li role="none"><a role="menuitem" href="#faq" class="hover:text-primary-600 transition">FAQ</a></li>
+                  
         </ul>
 
-        <!-- Actions & Mobile Toggle -->
-        <div class="flex items-center space-x-4">
-            <div class="hidden md:flex space-x-3">
-                <a href="{{ url_for('auth.login') }}" class="text-sm font-medium px-3 py-1.5 rounded-lg border border-primary-600 text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-950 transition">Login</a>
-                <a href="#" class="text-sm font-medium px-4 py-1.5 rounded-lg bg-primary-600 text-white shadow-md hover:bg-primary-700 transition">Sign Up</a>
-            </div>
-            <!-- Mobile Menu Button -->
-            <button id="navToggle" class="nav-toggle md:hidden text-2xl p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition" aria-label="Open menu">
-                <!-- SVG Icon for Menu -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
-        </div>
+       <div class="flex items-center space-x-4">
+    <div class="hidden md:flex space-x-3">
+        <a href="{{ url_for('auth.login') }}" class="text-sm font-medium px-3 py-1.5 rounded-lg border border-primary-600 text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-950 transition">Login</a>
+        <a href="#" class="text-sm font-medium px-4 py-1.5 rounded-lg bg-primary-600 text-white shadow-md hover:bg-primary-700 transition">Sign Up</a>
     </div>
+
+    <button id="navToggle" 
+            class="nav-toggle md:hidden text-2xl p-2 rounded-lg 
+                   bg-primary-600 text-white shadow-md
+                   hover:bg-primary-700 transition" 
+            aria-label="Open menu">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+</div>
 </nav>
 
-<!-- =============== HERO SECTION =============== -->
+<button class="dark-toggle" id="darkToggle" aria-label="Toggle dark mode">🌙</button>
+
 <section class="hero py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800" data-aos="fade-up">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
         <div class="content md:w-1/2" data-aos="fade-right">
@@ -208,11 +205,12 @@
                 AI-powered POS, inventory, expiry alerts, smart reports & multilingual support — everything in one system to maximize profit and efficiency.
             </p>
             <div class="actions mt-8 flex flex-col sm:flex-row gap-4">
-                <a href="#" class="px-8 py-3 text-lg font-semibold rounded-xl bg-primary-600 text-white shadow-xl hover:bg-primary-700 transition transform hover:scale-[1.02]">Get Started Free</a>
+               
+        
+               <a href="{{ url_for('auth.login') }}" class="px-8 py-3 text-lg font-semibold rounded-xl bg-primary-600 text-white shadow-xl hover:bg-primary-700 transition transform hover:scale-[1.02]">Get Started </a>
                 <a href="#features" class="px-8 py-3 text-lg font-semibold rounded-xl border-2 border-primary-600 text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-950 transition">Explore Features</a>
             </div>
         </div>
-        <!-- Hero Image Placeholder (Dashboard Mockup) -->
         <div class="md:w-1/2 w-full flex justify-center" data-aos="fade-left">
             <img 
                 src="https://placehold.co/1200x600/10B981/ffffff?text=AI+Powered+Dashboard+Interface" 
@@ -223,7 +221,6 @@
     </div>
 </section>
 
-<!-- =============== FEATURES SLIDER =============== -->
 <section id="features" class="carousel-section py-16 px-4 sm:px-6 lg:px-8" data-aos="fade-up">
     <div class="max-w-7xl mx-auto text-center">
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Core Features</h2>
@@ -231,26 +228,22 @@
         
         <div class="swiper featureSwiper mt-10">
             <div class="swiper-wrapper justify-center">
-                <!-- Feature 1: AI Expiry Alerts -->
                 <div class="swiper-slide rounded-xl p-6 bg-white dark:bg-gray-800 shadow-lg border border-gray-100 dark:border-gray-700 transition hover:shadow-primary-300/50 hover:shadow-xl">
                     <img src="https://placehold.co/300x200/FBBF24/ffffff?text=Expiry+Alert+Icon" class="w-full h-auto rounded-lg mb-4" alt="AI Expiry Alerts Icon">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white">AI Expiry Alerts</h3>
                     <p class="text-gray-500 dark:text-gray-400 mt-2">Predict & detect expiry before it happens, minimizing financial losses on stock.</p>
                 </div>
-                <!-- Feature 2: Smart POS -->
                 <div class="swiper-slide rounded-xl p-6 bg-white dark:bg-gray-800 shadow-lg border border-gray-100 dark:border-gray-700 transition hover:shadow-primary-300/50 hover:shadow-xl">
                     <img src="https://placehold.co/300x200/3B82F6/ffffff?text=POS+System+Icon" class="w-full h-auto rounded-lg mb-4" alt="Smart POS System Icon">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Smart POS</h3>
                     <p class="text-gray-500 dark:text-gray-400 mt-2">Lightning-fast Point of Sale with integrated barcode scanning and customizable invoicing.</p>
                 </div>
-                <!-- Feature 3: Auto Reorder -->
                 <div class="swiper-slide rounded-xl p-6 bg-white dark:bg-gray-800 shadow-lg border border-gray-100 dark:border-gray-700 transition hover:shadow-primary-300/50 hover:shadow-xl">
                     <img src="https://placehold.co/300x200/EF4444/ffffff?text=Reorder+Forecast+Icon" class="w-full h-auto rounded-lg mb-4" alt="Auto Reorder System Icon">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Auto Reorder</h3>
                     <p class="text-gray-500 dark:text-gray-400 mt-2">AI recommends stock before it runs out, intelligently optimizing inventory levels based on demand.</p>
                 </div>
-                <!-- Feature 4: Multi-Branch Sync -->
-                 <div class="swiper-slide rounded-xl p-6 bg-white dark:bg-gray-800 shadow-lg border border-gray-100 dark:border-gray-700 transition hover:shadow-primary-300/50 hover:shadow-xl">
+                <div class="swiper-slide rounded-xl p-6 bg-white dark:bg-gray-800 shadow-lg border border-gray-100 dark:border-gray-700 transition hover:shadow-primary-300/50 hover:shadow-xl">
                     <img src="https://placehold.co/300x200/34D399/ffffff?text=Sync+Icon" class="w-full h-auto rounded-lg mb-4" alt="Multi-Branch Sync Icon">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Multi-Branch Sync</h3>
                     <p class="text-gray-500 dark:text-gray-400 mt-2">Manage all your pharmacy locations from a single dashboard with real-time stock synchronization.</p>
@@ -261,7 +254,6 @@
     </div>
 </section>
 
-<!-- =============== AI SECTION (Expanded) =============== -->
 <section id="ai" class="ai py-16 px-4 sm:px-6 lg:px-8 bg-primary-50 dark:bg-gray-800/50" data-aos="zoom-in">
     <div class="max-w-7xl mx-auto text-center">
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Deep AI Automation</h2>
@@ -291,7 +283,6 @@
     </div>
 </section>
 
-<!-- =============== TESTIMONIAL SLIDER =============== -->
 <section id="testimonials" class="testimonials py-16 px-4 sm:px-6 lg:px-8" data-aos="fade-up">
     <div class="max-w-7xl mx-auto text-center">
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Trusted By Pharmacies Worldwide</h2>
@@ -299,21 +290,18 @@
         
         <div class="swiper testimonialSwiper mt-10">
             <div class="swiper-wrapper justify-center">
-                <!-- Testimonial 1 -->
                 <div class="swiper-slide testimonial-card rounded-xl p-8 bg-white dark:bg-gray-800 shadow-xl border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center max-w-sm">
                     <img src="https://placehold.co/80x80/6B7280/ffffff?text=M" class="w-20 h-20 rounded-full object-cover mb-4 ring-4 ring-primary-600" alt="Avatar Mohamed">
                     <p class="text-lg italic text-gray-700 dark:text-gray-300 mb-4">“Reduced expiry losses by 80%. AI helped us reorder smartly. This system is a game-changer for managing profitability.”</p>
                     <h4 class="font-semibold text-primary-600">- Mohamed, Al Hikma Pharmacy</h4>
                     <p class="text-sm text-gray-500 dark:text-gray-400">Cairo, Egypt</p>
                 </div>
-                <!-- Testimonial 2 -->
                 <div class="swiper-slide testimonial-card rounded-xl p-8 bg-white dark:bg-gray-800 shadow-xl border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center max-w-sm">
                     <img src="https://placehold.co/80x80/6B7280/ffffff?text=A" class="w-20 h-20 rounded-full object-cover mb-4 ring-4 ring-primary-600" alt="Avatar Aisha">
                     <p class="text-lg italic text-gray-700 dark:text-gray-300 mb-4">“The POS is lightning-fast and the AI reports are next level! It took the guesswork out of my end-of-day reconciliation.”</p>
                     <h4 class="font-semibold text-primary-600">- Aisha, City Drug Store</h4>
                     <p class="text-sm text-gray-500 dark:text-gray-400">Lagos, Nigeria</p>
                 </div>
-                <!-- Testimonial 3 -->
                 <div class="swiper-slide testimonial-card rounded-xl p-8 bg-white dark:bg-gray-800 shadow-xl border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center max-w-sm">
                     <img src="https://placehold.co/80x80/6B7280/ffffff?text=J" class="w-20 h-20 rounded-full object-cover mb-4 ring-4 ring-primary-600" alt="Avatar Jane">
                     <p class="text-lg italic text-gray-700 dark:text-gray-300 mb-4">“Setting up multiple branches was seamless. Stock synchronization works perfectly across all our locations.”</p>
@@ -326,14 +314,12 @@
     </div>
 </section>
 
-<!-- =============== PRICING SECTION =============== -->
 <section id="pricing" class="pricing py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800" data-aos="fade-up">
     <div class="max-w-7xl mx-auto text-center">
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Simple, Transparent Pricing</h2>
         <p class="section-desc mt-3 text-gray-600 dark:text-gray-400">Choose the right plan for your pharmacy, no hidden fees. All plans include 24/7 support.</p>
         
         <div class="pricing-grid mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-            <!-- Starter Plan -->
             <div class="price-card relative p-8 bg-white dark:bg-gray-900 rounded-3xl shadow-xl transition hover:shadow-primary-600/30 border border-gray-200 dark:border-gray-700">
                 <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Starter</h3>
                 <p class="price mt-4 text-4xl font-extrabold text-primary-600">$19<span class="text-lg font-medium text-gray-500 dark:text-gray-400">/month</span></p>
@@ -348,7 +334,6 @@
                 <a href="#" class="mt-8 block w-full py-3 font-semibold rounded-xl bg-primary-600 text-white shadow-md hover:bg-primary-700 transition transform hover:scale-[1.01]">Start 14-Day Trial</a>
             </div>
             
-            <!-- Professional Plan (Popular) -->
             <div class="price-card popular relative p-8 bg-white dark:bg-gray-900 rounded-3xl shadow-xl transition hover:shadow-primary-600/50 flex flex-col">
                 <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Professional</h3>
                 <p class="price mt-4 text-4xl font-extrabold text-primary-600">$39<span class="text-lg font-medium text-gray-500 dark:text-gray-400">/month</span></p>
@@ -363,7 +348,6 @@
                 <a href="#" class="mt-8 block w-full py-3 font-semibold rounded-xl bg-primary-600 text-white shadow-md hover:bg-primary-700 transition transform hover:scale-[1.01]">Start 14-Day Trial</a>
             </div>
             
-            <!-- Enterprise Plan -->
             <div class="price-card relative p-8 bg-white dark:bg-gray-900 rounded-3xl shadow-xl transition hover:shadow-primary-600/30 border border-gray-200 dark:border-gray-700">
                 <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Enterprise</h3>
                 <p class="price mt-4 text-4xl font-extrabold text-primary-600">Custom</p>
@@ -381,39 +365,32 @@
     </div>
 </section>
 
-<!-- =============== ALL FEATURES GRID (Detailed) =============== -->
 <section id="all-features" class="all-features py-16 px-4 sm:px-6 lg:px-8" data-aos="fade-up">
     <div class="max-w-7xl mx-auto text-center">
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white">The Complete Feature Set</h2>
         <p class="section-desc mt-3 text-gray-600 dark:text-gray-400">Everything your pharmacy needs in one unified platform, guaranteed to increase operational efficiency.</p>
         
         <div class="features-grid mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Feature Box 1 -->
             <div class="feature-box p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-primary-200 dark:border-primary-900 text-left">
                 <h3 class="text-xl font-semibold text-primary-600">Fast POS & Sales</h3>
                 <p class="mt-2 text-gray-500 dark:text-gray-400">Lightning-speed invoicing, integrated thermal printing, customizable receipt options, and multiple payment gateway integrations.</p>
             </div>
-            <!-- Feature Box 2 -->
             <div class="feature-box p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-primary-200 dark:border-primary-900 text-left">
                 <h3 class="text-xl font-semibold text-primary-600">Robust Inventory Management</h3>
                 <p class="mt-2 text-gray-500 dark:text-gray-400">Track stock levels in real-time by batch, expiry, and location. Full support for FIFO and LIFO tracking methods.</p>
             </div>
-            <!-- Feature Box 3 -->
             <div class="feature-box p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-primary-200 dark:border-primary-900 text-left">
                 <h3 class="text-xl font-semibold text-primary-600">AI Predictive Analytics</h3>
                 <p class="mt-2 text-gray-500 dark:text-gray-400">Smart insights, detailed profit/loss analysis, and predictive stock forecasting based on sales history and external factors.</p>
             </div>
-            <!-- Feature Box 4 -->
             <div class="feature-box p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-primary-200 dark:border-primary-900 text-left">
                 <h3 class="text-xl font-semibold text-primary-600">Multi-Branch Ecosystem</h3>
                 <p class="mt-2 text-gray-500 dark:text-gray-400">Manage and synchronize stock, sales, and staff seamlessly across all your pharmacy locations from a single admin panel.</p>
             </div>
-            <!-- Feature Box 5 -->
             <div class="feature-box p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-primary-200 dark:border-primary-900 text-left">
                 <h3 class="text-xl font-semibold text-primary-600">Secure & Regulatory Reports</h3>
                 <p class="mt-2 text-gray-500 dark:text-gray-400">Generate secure, compliant daily, monthly, and yearly financial reports, exportable as PDF, Excel, or CSV files.</p>
             </div>
-            <!-- Feature Box 6 -->
             <div class="feature-box p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-primary-200 dark:border-primary-900 text-left">
                 <h3 class="text-xl font-semibold text-primary-600">Staff & Access Control</h3>
                 <p class="mt-2 text-gray-500 dark:text-gray-400">Role-based access controls (RBAC) to define permissions for pharmacists, technicians, and cashiers securely.</p>
@@ -422,7 +399,6 @@
     </div>
 </section>
 
-<!-- =============== FAQ SECTION (Accordion style implicit) =============== -->
 <section id="faq" class="all-features py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50" data-aos="fade-up">
     <div class="max-w-7xl mx-auto text-center">
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Frequently Asked Questions</h2>
@@ -448,7 +424,6 @@
     </div>
 </section>
 
-<!-- =============== CTA Banner =============== -->
 <section class="py-16 px-4 sm:px-6 lg:px-8 bg-primary-600" data-aos="fade-up">
     <div class="max-w-7xl mx-auto text-center">
         <h2 class="text-3xl font-bold text-white">Ready to automate your pharmacy?</h2>
@@ -459,7 +434,6 @@
     </div>
 </section>
 
-<!-- =============== FOOTER =============== -->
 <footer class="footer bg-gray-900 text-white py-10 px-4 sm:px-6 lg:px-8">
     <div class="max-w-7xl mx-auto border-t border-gray-800 pt-6">
         <div class="footer-content flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
@@ -475,141 +449,116 @@
                 <a href="#pricing" class="hover:text-primary-400 transition">Pricing</a>
                 <a href="#ai" class="hover:text-primary-400 transition">AI</a>
                 <a href="#" class="hover:text-primary-400 transition">Privacy Policy</a>
+                <a href="#" class="hover:text-primary-400 transition">Terms of Service</a>
                 <a href="#faq" class="hover:text-primary-400 transition">Support</a>
             </div>
         </div>
-        <p class="footer-bottom mt-8 text-center text-sm text-gray-500">
-            © <span id="currentYear"></span> Ray's Pharmacy | Built with Automation in mind.
-        </p>
+        <div class="text-center mt-8 text-sm text-gray-500">
+            &copy; 2025 Ray's Pharmacy. All rights reserved.
+        </div>
     </div>
 </footer>
 
-<!-- JS: AOS + SWIPER + Custom Logic -->
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- 1. Init Third Party Libraries ---
+        // --- 1. Initialize AOS (Animate On Scroll) ---
         AOS.init({
             duration: 1000,
             once: true,
         });
 
-        // Initialize Swipers
-        // Features Swiper
-        new Swiper(".featureSwiper", {
-            slidesPerView: 'auto',
+        // --- 2. Initialize Swiper Sliders ---
+        const featureSwiper = new Swiper('.featureSwiper', {
+            loop: true,
+            slidesPerView: 'auto', // Allows cards to dictate width
+            centeredSlides: true,
             spaceBetween: 24,
             pagination: {
-                el: ".swiper-pagination",
+                el: '.swiper-pagination',
                 clickable: true,
             },
-            centeredSlides: true,
-            loop: true,
             breakpoints: {
                 768: {
                     slidesPerView: 3,
                     centeredSlides: false,
-                    loop: false,
+                    spaceBetween: 32,
+                },
+                1024: {
+                    slidesPerView: 4,
+                    centeredSlides: false,
+                    spaceBetween: 32,
                 }
             }
         });
 
-        // Testimonials Swiper
-        new Swiper(".testimonialSwiper", {
+        const testimonialSwiper = new Swiper('.testimonialSwiper', {
+            loop: true,
             slidesPerView: 'auto',
+            centeredSlides: true,
             spaceBetween: 24,
             pagination: {
-                el: ".swiper-pagination",
+                el: '.swiper-pagination',
                 clickable: true,
             },
-            loop: true,
             breakpoints: {
                 768: {
                     slidesPerView: 2,
-                    spaceBetween: 30,
                     centeredSlides: false,
+                    spaceBetween: 32,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    centeredSlides: false,
+                    spaceBetween: 32,
                 }
             }
         });
 
-
-        // --- 2. Custom JS Logic ---
-
-        // Footer Year
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-        // Dark Mode Toggle Logic
+        // --- 3. Dark Mode Toggle ---
         const darkToggle = document.getElementById('darkToggle');
-        const body = document.body;
-
-        const setDarkMode = (isDark) => {
-            if (isDark) {
-                body.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-                darkToggle.innerHTML = '☀️';
-            } else {
-                body.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-                darkToggle.innerHTML = '🌙';
-            }
-        };
-
-        // Check local storage or system preference on load
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'dark' || (!currentTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            setDarkMode(true);
+        
+        // Initial check for preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            darkToggle.textContent = '☀️';
         } else {
-            setDarkMode(false);
+            document.documentElement.classList.remove('dark');
+            darkToggle.textContent = '🌙';
         }
 
-        // Toggle button listener
         darkToggle.addEventListener('click', () => {
-            const isDark = body.classList.contains('dark');
-            setDarkMode(!isDark);
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+                darkToggle.textContent = '🌙';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+                darkToggle.textContent = '☀️';
+            }
         });
-
-        // Mobile Menu Toggle Logic
+        
+        // --- 4. Mobile Navigation Toggle ---
         const navToggle = document.getElementById('navToggle');
         const navLinks = document.getElementById('navLinks');
 
-        const toggleMenu = () => {
-            // Use Tailwind hidden class for non-md screens, toggle active for full screen menu
-            const isMenuHidden = navLinks.classList.contains('hidden');
-            if (window.innerWidth < 768) {
-                navLinks.classList.toggle('hidden');
-            }
+        navToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-        };
+        });
 
-        navToggle.addEventListener('click', toggleMenu);
-
-        // Close menu when a link is clicked (for mobile)
-        navLinks.querySelectorAll('a').forEach(link => {
+        // Close menu on link click (mobile)
+        document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
-                if (navLinks.classList.contains('active')) {
-                    // Check if it's currently in mobile view before toggling visibility
-                    if (window.innerWidth < 768) {
-                       navLinks.classList.add('hidden');
-                    }
+                if (window.innerWidth < 768) {
                     navLinks.classList.remove('active');
                 }
             });
         });
-        
-        // Ensure menu state corrects on resize
-        window.addEventListener('resize', () => {
-             if (window.innerWidth >= 768) {
-                 navLinks.classList.remove('active');
-                 navLinks.classList.remove('hidden');
-             } else {
-                // If resizing down to mobile, ensure hidden state is set if active is off
-                if (!navLinks.classList.contains('active')) {
-                     navLinks.classList.add('hidden');
-                }
-             }
-        });
     });
 </script>
+
 </body>
 </html>

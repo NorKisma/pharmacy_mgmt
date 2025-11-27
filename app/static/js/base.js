@@ -17,8 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
      */
     function toggleSidebar() {
         if (!sidebar || !mainContent) return; // Exit if necessary elements aren't found
-
-        if (window.innerWidth <= 768) {
+       if (window.innerWidth <= 768) {
             // Mobile view: Full slide-out menu with overlay
             sidebar.classList.toggle('open');
             if (overlay) overlay.classList.toggle('active');
